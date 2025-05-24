@@ -53,3 +53,51 @@ function solution(number){
 // replace non aphabetic 
 const string = "some text"
 string.replaceAll(/[^A-Za-z]/g, "")
+
+// pairs number
+function sumPairs(ints, s) {
+  const seen = new Set();
+  for (const num of ints) {
+    const complement = s - num;
+    if (seen.has(complement)) {
+      return [complement, num];
+    }
+    seen.add(num);
+  }
+  return undefined;
+}
+
+//shuffle array
+function shuffle(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1)); // Random index from 0 to i
+    [array[i], array[j]] = [array[j], array[i]];   // Swap elements
+  }
+  return array;
+}
+
+function nextBigger(n) {
+  let digits = n.toString().split('').map(Number);
+
+  // Step 1: Find pivot
+  let i = digits.length - 2;
+  while (i >= 0 && digits[i] >= digits[i + 1]) {
+    i--;
+  }
+
+  if (i < 0) return -1; // already the biggest permutation
+
+  // Step 2: Find successor
+  let j = digits.length - 1;
+  while (digits[j] <= digits[i]) {
+    j--;
+  }
+
+  // Step 3: Swap
+  [digits[i], digits[j]] = [digits[j], digits[i]];
+
+  // Step 4: Reverse the suffix
+  const result = digits.slice(0, i + 1).concat(digits.slice(i + 1).reverse());
+
+  return parseInt(result.join(''), 10);
+}
